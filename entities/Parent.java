@@ -1,4 +1,4 @@
-package entites;
+package entities;
 
 public class Parent extends Entity{
 	
@@ -8,7 +8,7 @@ public class Parent extends Entity{
 		super();
 	}
 	
-	public Parent(String name, int personnummer, String email)
+	public Parent(String name, String personnummer, String email)
 	{
 		super(name, personnummer, email);
 	}

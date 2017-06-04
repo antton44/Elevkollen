@@ -1,11 +1,16 @@
-package entites;
+package entities;
 
 import java.util.ArrayList;
 
-public class Course {
+import dto.StudentDTO;
+import factory.Entities;
+import factory.EntityFactory;
+
+public class Course implements Entities{
 	private String courseID;
 	private String courseName;
 	private ArrayList<Student> students;
+	private EntityFactory ef;
 	
 	public Course()
 	{
@@ -19,11 +24,12 @@ public class Course {
 		this.courseID = courseID;
 		this.courseName = courseName;
 		students = new ArrayList<Student>();
+		ef = new EntityFactory();
 	}
 
-	public void addStudent(Student student)
+	public void addStudent(StudentDTO dto)
 	{
-		students.add(student);
+		students.add((Student)ef.getEntity(STUDENT, dto.name,  dto.personnummer,  dto.email));
 	}
 	
 	public Student getStudent(int i)

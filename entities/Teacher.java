@@ -1,4 +1,4 @@
-package entites;
+package entities;
 
 public class Teacher extends Entity{
 	
@@ -8,7 +8,7 @@ public class Teacher extends Entity{
 		super();
 	}
 	
-	public Teacher(String name, int personnummer, String email)
+	public Teacher(String name, String personnummer, String email)
 	{
 		super(name, personnummer, email);
 	}
