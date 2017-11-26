@@ -2,7 +2,6 @@ package data.dataTransferObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import data.dataFacade.IDataState;
 import observer.Observer;
@@ -10,10 +9,8 @@ import observer.Observer;
 public abstract class DataTransferObject{
 	public IDataState state;
 	private List<Observer> observers = new ArrayList<Observer>();
-	protected UUID uuid;
 	
 	public DataTransferObject(){
-		uuid = UUID.randomUUID();
 		state = null;
 	}
 	
