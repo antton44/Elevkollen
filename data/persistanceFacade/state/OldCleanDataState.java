@@ -12,7 +12,6 @@ public class OldCleanDataState implements IDataState{
 	@Override
 	public void save(DataTransferObject dto) {
 		dto.setState(this);
-		
 	}
 
 	@Override
@@ -25,7 +24,10 @@ public class OldCleanDataState implements IDataState{
 
 	@Override
 	public void delete(DataTransferObject dto) {
-		// dto.setState(this);
+		dto.setState(this);
+	}
+	public String toString(){
+		return "Old Clean Data State";
 	}
 	
 }
