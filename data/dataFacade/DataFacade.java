@@ -30,18 +30,33 @@ public class DataFacade implements Entities{
 	private NewDataState nds = new NewDataState();
 	
 	//Student
-	public Object getStudent()
+	public ArrayList<Student> getStudent()
 	{
 		try {
 			 obj = sb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		ArrayList<Student> students = new ArrayList<Student>();
 		String s1 = obj.toString();
-		String[] splitter1 = s1.split("---|\\n");
-		sDTO = new StudentDTO(splitter1[0], splitter1[1],splitter1[2]);
-		Student newStudent = (Student) ef.getEntity(STUDENT, sDTO.name, sDTO.personnummer, sDTO.email);
-		return newStudent;
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			int y = 2;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				sDTO = new StudentDTO(splitter1[r], splitter1[t],splitter1[y]);
+				students.add((Student) ef.getEntity(STUDENT, sDTO.name, sDTO.personnummer, sDTO.email));
+				r = r + 3;
+				t = t + 3;
+				y = y + 3;
+			}
+		}
+		return students;
 	}
 	
 	public void addStudent(Student student)
@@ -94,18 +109,33 @@ public class DataFacade implements Entities{
 	
 	
 	//Teacher
-	public Object getTeacher()
+	public ArrayList<Teacher> getTeacher()
 	{
 		try {
 			 obj = tb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		ArrayList<Teacher> teachers = new ArrayList<Teacher>();
 		String s1 = obj.toString();
-		String[] splitter1 = s1.split("---|\\n");
-		tDTO = new TeacherDTO(splitter1[0], splitter1[1],splitter1[2]);
-		Teacher newTeacher = (Teacher) ef.getEntity(TEACHER, tDTO.name, tDTO.personnummer, tDTO.email);
-		return newTeacher;
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			int y = 2;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				tDTO = new TeacherDTO(splitter1[r], splitter1[t],splitter1[y]);
+				teachers.add((Teacher) ef.getEntity(TEACHER, tDTO.name, tDTO.personnummer, tDTO.email));
+				r = r + 3;
+				t = t + 3;
+				y = y + 3;
+			}
+		}
+		return teachers;
 	}
 	
 	public void addTeacher(Teacher teacher)
@@ -155,18 +185,33 @@ public class DataFacade implements Entities{
 	
 	
 	//Parent
-	public Object getParent()
+	public ArrayList<Parent> getParent()
 	{
 		try {
 			 obj = pb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		ArrayList<Parent> parents = new ArrayList<Parent>();
 		String s1 = obj.toString();
-		String[] splitter1 = s1.split("---|\\n");
-		pDTO = new ParentDTO(splitter1[0], splitter1[1],splitter1[2]);
-		Parent newParent = (Parent) ef.getEntity(PARENT, tDTO.name, tDTO.personnummer, tDTO.email);
-		return newParent;
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			int y = 2;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				tDTO = new TeacherDTO(splitter1[r], splitter1[t],splitter1[y]);
+				parents.add((Parent) ef.getEntity(PARENT, pDTO.name, pDTO.personnummer, pDTO.email));
+				r = r + 3;
+				t = t + 3;
+				y = y + 3;
+			}
+		}
+		return parents;
 	}
 	
 	public void addParent(Parent parent)
@@ -217,16 +262,33 @@ public class DataFacade implements Entities{
 	}
 	
 	//Semester
-	public Object getSemester()
+	public ArrayList<Semester> getSemester()
 	{
 		try {
 			 obj = semb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		semDTO = new SemesterDTO(obj.toString());
-		Semester sem = new Semester(semDTO.toString());
-		return sem;
+		ArrayList<Semester> semesters = new ArrayList<Semester>();
+		String s1 = obj.toString();
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			int y = 2;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				tDTO = new TeacherDTO(splitter1[r], splitter1[t],splitter1[y]);
+				semesters.add(new Semester(semDTO.toString()));
+				r = r + 3;
+				t = t + 3;
+				y = y + 3;
+			}
+		}
+		return semesters;
 	}
 	
 	public void addSemester(Semester semester)
@@ -273,18 +335,33 @@ public class DataFacade implements Entities{
 	}
 	
 	//Course
-	public Object getCourse()
+	public ArrayList<Course> getCourse()
 	{
 		try {
 			 obj = cb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		ArrayList<Course> courses = new ArrayList<Course>();
 		String s1 = obj.toString();
-		String[] splitter1 = s1.split("---|\\n");
-		cDTO = new CourseDTO(splitter1[0], splitter1[1]);
-		Course newCourse = new Course(cDTO.classID, cDTO.name);
-		return newCourse;
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			int y = 2;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				tDTO = new TeacherDTO(splitter1[r], splitter1[t],splitter1[y]);
+				courses.add(new Course(cDTO.classID, cDTO.name));
+				r = r + 3;
+				t = t + 3;
+				y = y + 3;
+			}
+		}
+		return courses;
 	}
 	
 	public void addCourse(Course course)
