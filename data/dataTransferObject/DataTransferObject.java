@@ -35,8 +35,4 @@ public abstract class DataTransferObject{
          	observer.update();
       	 }
 	}
-	
-	public UUID getUUID(){
-		return uuid;
-	}
 }
