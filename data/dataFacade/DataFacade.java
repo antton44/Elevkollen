@@ -12,7 +12,7 @@ import domain.entities.Semester;
 import domain.entities.Student;
 import domain.entities.Teacher;
 
-public class DataFacade {
+public class DataFacade implements Entities{
 	private StudentBroker sb;
 	private StudentDTO sDTO;
 	private TeacherBroker tb;
@@ -22,7 +22,7 @@ public class DataFacade {
 	private SemesterBroker semb;
 	private SemesterDTO semDTO;
 	private Object obj;
-	private EntityFactory ef;
+	private EntityFactory ef = new EntityFactory();
 	
 	//Student
 	public Object getStudent()
@@ -35,8 +35,8 @@ public class DataFacade {
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		sDTO = new StudentDTO(splitter1[0], splitter1[1],splitter1[2]);
-		
-		return sDTO;
+		Student newStudent = (Student) ef.getEntity(STUDENT, sDTO.name, sDTO.personnummer, sDTO.email);
+		return newStudent;
 	}
 	
 	public void addStudent(Student student)
@@ -80,7 +80,8 @@ public class DataFacade {
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		sDTO = new StudentDTO(splitter1[0], splitter1[1],splitter1[2]);
-		return sDTO;
+		Student newStudent = (Student) ef.getEntity(STUDENT, sDTO.name, sDTO.personnummer, sDTO.email);
+		return newStudent;
 	}
 	
 	
@@ -95,7 +96,8 @@ public class DataFacade {
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		tDTO = new TeacherDTO(splitter1[0], splitter1[1],splitter1[2]);
-		return tDTO;
+		Teacher newTeacher = (Teacher) ef.getEntity(TEACHER, tDTO.name, tDTO.personnummer, tDTO.email);
+		return newTeacher;
 	}
 	
 	public void addTeacher(Teacher teacher)
@@ -136,7 +138,8 @@ public class DataFacade {
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		tDTO = new TeacherDTO(splitter1[0], splitter1[1],splitter1[2]);
-		return tDTO;
+		Teacher newTeacher = (Teacher) ef.getEntity(TEACHER, tDTO.name, tDTO.personnummer, tDTO.email);
+		return newTeacher;
 	}
 	
 	
@@ -151,8 +154,8 @@ public class DataFacade {
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		pDTO = new ParentDTO(splitter1[0], splitter1[1],splitter1[2]);
-		
-		return pDTO;
+		Parent newParent = (Parent) ef.getEntity(PARENT, tDTO.name, tDTO.personnummer, tDTO.email);
+		return newParent;
 	}
 	
 	public void addParent(Parent parent)
@@ -175,7 +178,7 @@ public class DataFacade {
 		}
 	}
 	
-	public void deleteStudent(Parent parent)
+	public void deleteParent(Parent parent)
 	{
 		ParentDTO dto = new ParentDTO(parent.getPersonnummer(), parent.getName(), parent.getEmail());
 		try {
@@ -185,7 +188,7 @@ public class DataFacade {
 		}
 	}
 	
-	public Object findStudent(Parent parent)
+	public Object findParent(Parent parent)
 	{
 		ParentDTO dto = new ParentDTO(parent.getPersonnummer(), parent.getName(), parent.getEmail());
 		try {
@@ -195,8 +198,8 @@ public class DataFacade {
 		}
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
-		pDTO = new ParentDTO(splitter1[0], splitter1[1],splitter1[2]);
-		return pDTO;
+		Parent newParent = (Parent) ef.getEntity(PARENT, tDTO.name, tDTO.personnummer, tDTO.email);
+		return newParent;
 	}
 	
 	//Semester
@@ -208,7 +211,8 @@ public class DataFacade {
 			e.printStackTrace();
 		}
 		semDTO = new SemesterDTO(obj.toString());
-		return semDTO;
+		Semester sem = new Semester(semDTO.toString());
+		return sem;
 	}
 	
 	public void addSemester(Semester semester)
@@ -250,7 +254,8 @@ public class DataFacade {
 			e.printStackTrace();
 		}
 		semDTO = new SemesterDTO(obj.toString());
-		return semDTO;
+		Semester sem = new Semester(semDTO.toString());
+		return sem;
 	}
 	
 	//
