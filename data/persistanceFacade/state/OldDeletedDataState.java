@@ -26,4 +26,7 @@ public class OldDeletedDataState implements IDataState{
 	public void delete(DataTransferObject dto) {
 		dto.setState(this);
 	}
+	public String toString(){
+		return "Old Deleted Data State";
+	}
 }
