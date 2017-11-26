@@ -2,11 +2,11 @@ package data.dataTransferObject;
 
 import java.util.UUID;
 
-public class ClassDTO extends DataTransferObject{
+public class CourseDTO extends DataTransferObject{
 	public String name;
 	public String classID;
 
-	public ClassDTO(String classID, String name)
+	public CourseDTO(String classID, String name)
 	{
 		this.name = name;
 		this.classID = classID;
