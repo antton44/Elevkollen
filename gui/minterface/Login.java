@@ -168,7 +168,7 @@ public class Login extends JFrame {
 					
 				}
 				
-				TeacherDTO tdto = new TeacherDTO(loginstring);
+				TeacherDTO tdto = new TeacherDTO("", loginstring, "");
 				TeacherBroker tb = new TeacherBroker();
 				
 				rs=null;
@@ -183,7 +183,7 @@ public class Login extends JFrame {
 				}
 				
 				rs = null;
-				ParentDTO pdto = new ParentDTO(loginstring);
+				ParentDTO pdto = new ParentDTO("", loginstring, "");
 				ParentBroker pb = new ParentBroker();
 				try{
 					rs = pb.findInStorage(pdto);
