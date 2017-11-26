@@ -199,31 +199,31 @@ public class DataFacade implements Entities{
 	//Parent
 	public ArrayList<Parent> getParent()
 	{
-		try {
-			 obj = pb.getFromStorage(new Object());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		ArrayList<Parent> parents = new ArrayList<Parent>();
-		String s1 = obj.toString();
-		String[] test = s1.split("\\n");
-		int length = test.length;
-		int rounds = length / 3;
-		
-		for (int i = 0; i < rounds; i++) {
-			int r = 0;
-			int t = 1;
-			int y = 2;
-			for (int k = 0; k < length; k++) {
-				String[] splitter1 = s1.split("---|\\n");
-				tDTO = new TeacherDTO(splitter1[r], splitter1[t],splitter1[y]);
-				parents.add((Parent) ef.getEntity(PARENT, pDTO.name, pDTO.personnummer, pDTO.email));
-				r = r + 3;
-				t = t + 3;
-				y = y + 3;
+			try {
+				 obj = pb.getFromStorage(new Object());
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		}
-		return parents;
+			ArrayList<Parent> parents = new ArrayList<Parent>();
+			String s1 = obj.toString();
+			String[] test = s1.split("\\n");
+			int length = test.length;
+			int rounds = length / 3;
+			
+			for (int i = 0; i < rounds; i++) {
+				int r = 0;
+				int t = 1;
+				int y = 2;
+				for (int k = 0; k < length; k++) {
+					String[] splitter1 = s1.split("---|\\n");
+					pDTO = new ParentDTO(splitter1[r], splitter1[t],splitter1[y]);
+					parents.add((Parent) ef.getEntity(PARENT, pDTO.name, pDTO.personnummer, pDTO.email));
+					r = r + 3;
+					t = t + 3;
+					y = y + 3;
+				}
+			}
+			return parents;
 	}
 	
 	public void addParent(Parent parent)
