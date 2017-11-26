@@ -123,7 +123,7 @@ public class UserAddMenu extends JPanel {
 			switch (table) {
 			case "Teacher":
 				TeacherBroker tb = new TeacherBroker();
-				t = new TeacherDTO(dto);
+				t = new TeacherDTO(entry, entry2, entry3);
 				oldCleanDataState.insert(t);
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
@@ -174,7 +174,7 @@ public class UserAddMenu extends JPanel {
 				break;
 			case "Parent":
 				ParentBroker pb = new ParentBroker();
-				p = new ParentDTO(dto);
+				p = new ParentDTO(entry, entry2, entry3);
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
 						try {
