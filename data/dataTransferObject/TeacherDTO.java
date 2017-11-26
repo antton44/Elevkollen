@@ -1,14 +1,19 @@
 package data.dataTransferObject;
 
 public class TeacherDTO extends DataTransferObject{
-	private String name;
+	public String name;
+	public String personnummer;
+	public String email;
 
-	public TeacherDTO(String name)
+	
+	public TeacherDTO(String personummer, String name, String email)
 	{
 		this.name = name;
+		this.personnummer = personummer;
+		this.email = email;
 	}
 	
 	public String toString(){
-		return name;
+		return this.personnummer + this.name + this.email;
 	}
 }
