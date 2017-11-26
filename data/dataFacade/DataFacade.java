@@ -39,6 +39,7 @@ public class DataFacade implements Entities{
 		return newStudent;
 	}
 	
+	//add a student
 	public void addStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
@@ -49,6 +50,7 @@ public class DataFacade implements Entities{
 		}
 	}
 	
+	//update a student
 	public void updateStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
@@ -59,6 +61,7 @@ public class DataFacade implements Entities{
 		}
 	}
 	
+	//delete a student
 	public void deleteStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
@@ -69,6 +72,7 @@ public class DataFacade implements Entities{
 		}
 	}
 	
+	//get a student
 	public Object findStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
@@ -100,6 +104,7 @@ public class DataFacade implements Entities{
 		return newTeacher;
 	}
 	
+	//add a yteacher
 	public void addTeacher(Teacher teacher)
 	{
 		TeacherDTO dto = new TeacherDTO(teacher.getPersonnummer(), teacher.getName(), teacher.getEmail());
@@ -110,6 +115,7 @@ public class DataFacade implements Entities{
 		}
 	}
 	
+	//update a teacher
 	public void updateTeacher(Teacher teacher)
 	{
 		try {
@@ -119,6 +125,7 @@ public class DataFacade implements Entities{
 		}
 	}
 	
+	//delete a teacher
 	public void deleteTeacher(Teacher teacher)
 	{
 		try {
@@ -128,6 +135,7 @@ public class DataFacade implements Entities{
 		}
 	}
 	
+	//get a teacher
 	public Object findTeacher(Teacher teacher)
 	{
 		try {
