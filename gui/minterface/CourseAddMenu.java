@@ -92,7 +92,7 @@ public class CourseAddMenu extends JPanel {
 			
 			if(e.getSource() == addBtn){
 				if(entry != null){
-					df.addCourse();
+					df.addCourse(c);
 				}	
 			} else if (e.getSource() == viewBtn) {
 				df.getCourse();
