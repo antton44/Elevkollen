@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,14 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import data.dataFacade.IDataState;
-import data.dataTransferObject.ParentDTO;
-import data.dataTransferObject.StudentDTO;
-import data.dataTransferObject.TeacherDTO;
-import data.persistanceFacade.broker.ParentBroker;
-import data.persistanceFacade.broker.StudentBroker;
-import data.persistanceFacade.broker.TeacherBroker;
-import data.persistanceFacade.state.NewDataState;
+import domain.entities.Teacher;
+import domain.entities.Parent;
+import domain.entities.Student;
 
 @SuppressWarnings("serial")
 public class UserAddMenu extends JPanel {
@@ -38,10 +32,10 @@ public class UserAddMenu extends JPanel {
 	private JLabel userEmailLabel;
 	private JComboBox<String> userType;
 	private GridBagConstraints gbc = new GridBagConstraints();
-	private ParentDTO p;
-	private StudentDTO s;
-	private data.dataTransferObject.TeacherDTO t;
-	private IDataState oldCleanDataState;
+	private domain.entities.Parent p;
+	private domain.entities.Student s;
+	private domain.entities.Teacher t;
+	private data.dataFacade.DataFacade df;
 
 
 	public UserAddMenu() {
@@ -118,80 +112,38 @@ public class UserAddMenu extends JPanel {
 			String entry2 = userName.getText() + "---";
 			String entry3 = userEmail.getText();
 
-			String dto = entry + "---" + entry2 + "---" + entry3;
-
 			switch (table) {
 			case "Teacher":
-				TeacherBroker tb = new TeacherBroker();
-				t = new TeacherDTO(entry, entry2, entry3);
-				oldCleanDataState.insert(t);
+				t = new Teacher(entry, entry2, entry3);
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
-						try {
-							tb.insertStorage(t);
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
+						df.addTeacher(t);
 					}
 				}
 				else if (e.getSource() == viewBtn) {
-					try {
-						tb.getFromStorage(t);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					
-					
+					df.getTeacher();
 				}
 				break;
 			case "Student":
-				StudentBroker sb = new StudentBroker();
-				
-				s = new StudentDTO(entry, entry2, entry3);
-				NewDataState nds = new NewDataState();
-				nds.insert(s);
-				s.setState(nds);
-				System.out.println(s.getState());
+				s = new Student(entry, entry2, entry3);
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
-						try {
-							sb.insertStorage(s);
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
+							df.addStudent(s);
 					}
 				}
 				else if (e.getSource() == viewBtn) {
-					try {
-						sb.getFromStorage(s);
-						System.out.println(s);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					
-					
+					df.getStudent();
 				}
 				break;
 			case "Parent":
-				ParentBroker pb = new ParentBroker();
-				p = new ParentDTO(entry, entry2, entry3);
+				p = new Parent(entry, entry2, entry3);
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
-						try {
-							pb.insertStorage(p);
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
+						df.addParent(p);
 					}
 				}
 				else if (e.getSource() == viewBtn) {
-					try {
-						pb.getFromStorage(p);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					
-					
+					df.getParent();
 				}
 				break;
 			}
