@@ -3,15 +3,16 @@ package data.dataTransferObject;
 import java.util.UUID;
 
 public class ClassDTO extends DataTransferObject{
-	//private String classID;
-	private String name;
+	public String name;
+	public String classID;
 
-	public ClassDTO(String name)
+	public ClassDTO(String classID, String name)
 	{
 		this.name = name;
+		this.classID = classID;
 	}
 	
 	public String toString(){
-		return name;
+		return this.classID + this.name;
 	}
 }
