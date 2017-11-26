@@ -148,6 +148,10 @@ public class UserAddMenu extends JPanel {
 				StudentBroker sb = new StudentBroker();
 				
 				s = new StudentDTO(entry, entry2, entry3);
+				NewDataState nds = new NewDataState();
+				nds.insert(s);
+				s.setState(nds);
+				System.out.println(s.getState());
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
 						try {
