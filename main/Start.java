@@ -2,7 +2,8 @@ package main;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
-import minterface.Login;
+
+import gui.minterface.Login;
 
 public class Start {
 

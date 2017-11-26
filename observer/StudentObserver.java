@@ -1,6 +1,6 @@
 package observer;
 
-import dto.DataTransferObject;
+import data.dataTransferObject.DataTransferObject;
 
 public class StudentObserver extends Observer{
 
@@ -12,7 +12,7 @@ public class StudentObserver extends Observer{
 	
 	@Override
 	public void update() {
-		dto.getBroker().update(dto);
+		
 	}
 	
 }

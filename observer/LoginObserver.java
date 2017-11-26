@@ -1,6 +1,6 @@
 package observer;
 
-import dto.DataTransferObject;
+import data.dataTransferObject.DataTransferObject;
 
 public class LoginObserver extends Observer{
 
