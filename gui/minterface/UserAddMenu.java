@@ -110,7 +110,6 @@ public class UserAddMenu extends JPanel {
 
 	private class Handlerclass implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource()==addBtn){
 				String table = (String) userType.getSelectedItem();
 				String entry = userID.getText() + "---";
 				String entry2 = userName.getText() + "---";
@@ -125,7 +124,11 @@ public class UserAddMenu extends JPanel {
 						}
 					}
 					else if (e.getSource() == viewBtn) {
-						df.getTeacher();
+						ArrayList<Teacher> temp = df.getTeacher();
+						//loop list
+						for(int i = 0;i < temp.size(); i++){
+							System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
+						}
 					}
 					break;
 				case "Student":
@@ -151,16 +154,15 @@ public class UserAddMenu extends JPanel {
 					}
 					break;
 				}
-			}
 			
-			if(e.getSource()==viewBtn){
+			/*if(e.getSource()==viewBtn){
 				//get from database
 				ArrayList<Teacher> temp = df.getTeacher();
 				//loop list
 				for(int i = 0;i < temp.size(); i++){
 					System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
 				}
-			}
+			}*/
 		}
 	}
 }
