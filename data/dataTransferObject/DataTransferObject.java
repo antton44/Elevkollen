@@ -14,12 +14,12 @@ public abstract class DataTransferObject{
 	
 	public DataTransferObject(){
 		uuid = UUID.randomUUID();
+		state = null;
 	}
 	
 	public void setState(IDataState state)
 	{
 		this.state = state;
-		//System.out.println("state changed to " + state.toString());
 		notifyAllObservers();
 	}
 	
@@ -34,16 +34,12 @@ public abstract class DataTransferObject{
 	}
 	
 	public void notifyAllObservers(){
-      for (Observer observer : observers) {
-         observer.update();
-      }
+      	 for (Observer observer : observers) {
+         	observer.update();
+      	 }
 	}
 	
 	public UUID getUUID(){
 		return uuid;
 	}
-	
-	public String toString(){
-		return "smo";
-				}
 }
