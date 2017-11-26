@@ -90,25 +90,35 @@ public class TeacherBroker extends Broker {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:test.db");
 			conn.setAutoCommit(false);
+			String SQL = "SELECT * FROM Teachers;";
 			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Teachers;");
+			boolean results = stmt.execute(SQL);
+			@SuppressWarnings("unused")
+			int rsCount = 0;
 			String returns = "";
-			while (rs.next()) {
-				@SuppressWarnings("unused")
-				String id = rs.getString("personnummer");
-				@SuppressWarnings("unused")
-				String name = rs.getString("namn");
-				@SuppressWarnings("unused")
-				String email = rs.getString("email");
-				returns += rs.getString("personnummer");
-			}
-			rs.close();
+			// Loop through the available result sets.
+			do {
+				if (results) {
+					ResultSet rs = stmt.getResultSet();
+					rsCount++;
+
+					// Show data from the result set.
+					while (rs.next()) {
+						String id = rs.getString("personnummer");
+						String name = rs.getString("namn");
+						String email = rs.getString("email");
+
+						returns += id + "---" + name + "---" + email + "\n";
+					}
+					rs.close();
+				}
+				results = stmt.getMoreResults();
+			} while (results);
 			stmt.close();
 			conn.close();
 			return returns;
-		} catch (Throwable e) {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			System.exit(0);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
