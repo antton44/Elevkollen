@@ -7,7 +7,6 @@ public class NewDataState implements IDataState{
 
 	@Override
 	public void insert(DataTransferObject dto) {
-		dto.state = this;
 	}
 
 	@Override
@@ -20,8 +19,10 @@ public class NewDataState implements IDataState{
 	public void update(DataTransferObject dto) {}
 
 	@Override
-	public void delete(DataTransferObject dto) {}
+	public void delete(DataTransferObject dto) {
+		dto.setState(this);
+	}
 	public String toString(){
-		return "New Data State";
+		return "Deleted Data State";
 	}
 }
