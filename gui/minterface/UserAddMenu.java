@@ -150,7 +150,11 @@ public class UserAddMenu extends JPanel {
 						}
 					}
 					else if (e.getSource() == viewBtn) {
-						df.getParent();
+						ArrayList<Parent> temp = df.getParent();
+						//loop list
+						for(int i = 0;i < temp.size(); i++){
+							System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
+						}
 					}
 					break;
 				}
