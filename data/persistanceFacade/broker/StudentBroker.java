@@ -18,9 +18,9 @@ public class StudentBroker extends Broker {
 		String s = object.toString() + ":::";
 		String[] t = s.split(":::");
 		//Rensad sträng, utan DTO-id
-		String hej = t[0];
+		String temp = t[0];
 		//Delar upp sträng innan insert till databasen
-		String[] splitter = hej.split("---");
+		String[] splitter = temp.split("---");
 		String input = splitter[0];
 		String input2 = splitter[1];
 		try {
@@ -45,8 +45,8 @@ public class StudentBroker extends Broker {
 	public void updateStorage(Object object) throws SQLException {
 		String s = object.toString() + ":::";
 		String[] t = s.split(":::");
-		String hej = t[0];
-		String[] splitter = hej.split("---");
+		String temp = t[0];
+		String[] splitter = temp.split("---");
 
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -68,8 +68,8 @@ public class StudentBroker extends Broker {
 	public void deleteStorage(Object object) throws SQLException {
 		String s = object.toString() + ":::";
 		String[] t = s.split(":::");
-		String hej = t[0];
-		String[] splitter = hej.split("---");
+		String temp = t[0];
+		String[] splitter = temp.split("---");
 
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -132,8 +132,8 @@ public class StudentBroker extends Broker {
 
 		String s = object.toString() + ":::";
 		String[] t = s.split(":::");
-		String hej = t[0];
-		String[] splitter = hej.split("---");
+		String temp = t[0];
+		String[] splitter = temp.split("---");
 
 		try {
 			Class.forName("org.sqlite.JDBC");
