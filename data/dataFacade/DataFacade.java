@@ -4,9 +4,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import data.persistanceFacade.factory.*;
+import data.persistanceFacade.state.*;
 import data.dataTransferObject.*;
 import data.persistanceFacade.broker.*;
 import domain.entities.Absence;
+import domain.entities.Course;
 import domain.entities.Parent;
 import domain.entities.Semester;
 import domain.entities.Student;
@@ -21,8 +23,11 @@ public class DataFacade implements Entities{
 	private ParentDTO pDTO;
 	private SemesterBroker semb;
 	private SemesterDTO semDTO;
+	private CourseBroker cb;
+	private CourseDTO cDTO;
 	private Object obj;
 	private EntityFactory ef = new EntityFactory();
+	private NewDataState nds = new NewDataState();
 	
 	//Student
 	public Object getStudent()
@@ -39,10 +44,12 @@ public class DataFacade implements Entities{
 		return newStudent;
 	}
 	
-	//add a student
 	public void addStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
+		nds.insert(dto);
+		dto.setState(nds);
+		System.out.println(dto.getState());
 		try {
 			sb.insertStorage(dto);
 		} catch (SQLException e) {
@@ -50,7 +57,6 @@ public class DataFacade implements Entities{
 		}
 	}
 	
-	//update a student
 	public void updateStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
@@ -61,7 +67,6 @@ public class DataFacade implements Entities{
 		}
 	}
 	
-	//delete a student
 	public void deleteStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
@@ -72,7 +77,6 @@ public class DataFacade implements Entities{
 		}
 	}
 	
-	//get a student
 	public Object findStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
@@ -104,10 +108,12 @@ public class DataFacade implements Entities{
 		return newTeacher;
 	}
 	
-	//add a yteacher
 	public void addTeacher(Teacher teacher)
 	{
 		TeacherDTO dto = new TeacherDTO(teacher.getPersonnummer(), teacher.getName(), teacher.getEmail());
+		nds.insert(dto);
+		dto.setState(nds);
+		System.out.println(dto.getState());
 		try {
 			tb.insertStorage(dto);
 		} catch (SQLException e) {
@@ -115,7 +121,6 @@ public class DataFacade implements Entities{
 		}
 	}
 	
-	//update a teacher
 	public void updateTeacher(Teacher teacher)
 	{
 		try {
@@ -125,7 +130,6 @@ public class DataFacade implements Entities{
 		}
 	}
 	
-	//delete a teacher
 	public void deleteTeacher(Teacher teacher)
 	{
 		try {
@@ -135,7 +139,6 @@ public class DataFacade implements Entities{
 		}
 	}
 	
-	//get a teacher
 	public Object findTeacher(Teacher teacher)
 	{
 		try {
@@ -169,6 +172,9 @@ public class DataFacade implements Entities{
 	public void addParent(Parent parent)
 	{
 		ParentDTO dto = new ParentDTO(parent.getPersonnummer(), parent.getName(), parent.getEmail());
+		nds.insert(dto);
+		dto.setState(nds);
+		System.out.println(dto.getState());
 		try {
 			pb.insertStorage(dto);
 		} catch (SQLException e) {
@@ -266,6 +272,64 @@ public class DataFacade implements Entities{
 		return sem;
 	}
 	
-	//
+	//Course
+	public Object getCourse()
+	{
+		try {
+			 obj = cb.getFromStorage(new Object());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String s1 = obj.toString();
+		String[] splitter1 = s1.split("---|\\n");
+		cDTO = new CourseDTO(splitter1[0], splitter1[1]);
+		Course newCourse = new Course(cDTO.classID, cDTO.name);
+		return newCourse;
+	}
+	
+	public void addCourse(Course course)
+	{
+		CourseDTO dto = new CourseDTO(course.getCourseID(), course.getCourseName());
+		try {
+			cb.insertStorage(dto);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateCourse(Course course)
+	{
+		CourseDTO dto = new CourseDTO(course.getCourseID(), course.getCourseName());
+		try {
+			cb.updateStorage(dto);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteCourse(Course course)
+	{
+		CourseDTO dto = new CourseDTO(course.getCourseID(), course.getCourseName());
+		try {
+			cb.deleteStorage(dto);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Object findCourse(Course course)
+	{
+		CourseDTO dto = new CourseDTO(course.getCourseID(), course.getCourseName());
+		try {
+			obj = cb.findInStorage(dto);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String s1 = obj.toString();
+		String[] splitter1 = s1.split("---|\\n");
+		cDTO = new CourseDTO(splitter1[0], splitter1[1]);
+		Course newCourse = new Course(cDTO.classID, cDTO.name);
+		return newCourse;
+	}
 }
 
