@@ -15,10 +15,12 @@ public class OldDirtyDataObject implements IDataState{
 
 	@Override
 	public void reload(DataTransferObject dto) {
+		dto.setState(this);
 	}
 
 	@Override
 	public void update(DataTransferObject dto) {
+		dto.setState(this);
 	}
 
 	@Override
@@ -26,6 +28,6 @@ public class OldDirtyDataObject implements IDataState{
 		dto.setState(this);
 	}
 	public String toString(){
-		return "Deleted Data State";
+		return "Old Dirty Data State";
 	}
 }
