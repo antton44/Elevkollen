@@ -27,8 +27,8 @@ public class CourseAddMenu extends JPanel {
 	private JLabel CourseNameLabel;	//LAbel för kursnamn
 	private JTextField courseName;	//Textfält för kursnamn
 	private GridBagConstraints gbc = new GridBagConstraints();	//Gridbaglayout för knapparna
-	private domain.entities.Course c;
-	private data.dataFacade.DataFacade df;
+	private Course c;
+	private DataFacade df = new DataFacade();
 	private JPanel panel; //Klassens JPanel
 	Handlerclass handler;
 
