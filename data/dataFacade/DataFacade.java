@@ -26,8 +26,19 @@ public class DataFacade implements Entities{
 	private CourseBroker cb;
 	private CourseDTO cDTO;
 	private Object obj;
-	private EntityFactory ef = new EntityFactory();
-	private NewDataState nds = new NewDataState();
+	private EntityFactory ef;
+	private NewDataState nds;
+	
+	public DataFacade()
+	{
+		sb = new StudentBroker();
+		tb = new TeacherBroker();
+		pb = new ParentBroker();
+		semb = new SemesterBroker();
+		cb = new CourseBroker();
+		ef = new EntityFactory();
+		nds = new NewDataState();
+	}
 	
 	//Student
 	public ArrayList<Student> getStudent()
@@ -140,6 +151,7 @@ public class DataFacade implements Entities{
 	
 	public void addTeacher(Teacher teacher)
 	{
+		System.out.println("se");
 		TeacherDTO dto = new TeacherDTO(teacher.getPersonnummer(), teacher.getName(), teacher.getEmail());
 		nds.insert(dto);
 		dto.setState(nds);
