@@ -11,26 +11,17 @@ public class NewDataState implements IDataState{
 	}
 
 	@Override
-	public void save(DataTransferObject dto) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void save(DataTransferObject dto) {}
 
 	@Override
-	public void reload(DataTransferObject dto) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void reload(DataTransferObject dto) {}
 
 	@Override
-	public void update(DataTransferObject dto) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update(DataTransferObject dto) {}
 
 	@Override
-	public void delete(DataTransferObject dto) {
-		// TODO Auto-generated method stub
-		
+	public void delete(DataTransferObject dto) {}
+	public String toString(){
+		return "New Data State";
 	}
 }
