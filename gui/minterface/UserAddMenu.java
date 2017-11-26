@@ -1,6 +1,7 @@
 package gui.minterface;
 
 import java.awt.BorderLayout;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import data.dataFacade.DataFacade;
 import domain.entities.Teacher;
 import domain.entities.Parent;
 import domain.entities.Student;
@@ -32,10 +34,10 @@ public class UserAddMenu extends JPanel {
 	private JLabel userEmailLabel;
 	private JComboBox<String> userType;
 	private GridBagConstraints gbc = new GridBagConstraints();
-	private domain.entities.Parent p;
-	private domain.entities.Student s;
-	private domain.entities.Teacher t;
-	private data.dataFacade.DataFacade df;
+	private Parent p;
+	private Student s;
+	private Teacher t;
+	private DataFacade df = new DataFacade();
 
 
 	public UserAddMenu() {
@@ -115,6 +117,7 @@ public class UserAddMenu extends JPanel {
 			switch (table) {
 			case "Teacher":
 				t = new Teacher(entry, entry2, entry3);
+				System.out.println(t.toString());
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
 						df.addTeacher(t);
