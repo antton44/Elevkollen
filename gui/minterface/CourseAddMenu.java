@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 
 import data.dataTransferObject.ClassDTO;
 import data.persistanceFacade.broker.CourseBroker;
+import domain.entities.Course;
 
 
 @SuppressWarnings("serial")
@@ -26,7 +27,8 @@ public class CourseAddMenu extends JPanel {
 	private JLabel CourseNameLabel;	//LAbel för kursnamn
 	private JTextField courseName;	//Textfält för kursnamn
 	private GridBagConstraints gbc = new GridBagConstraints();	//Gridbaglayout för knapparna
-	private ClassDTO d;	//DTO för kurser
+	private domain.entities.Course c;
+	private data.dataFacade.DataFacade df;
 	private JPanel panel; //Klassens JPanel
 	Handlerclass handler;
 
@@ -85,26 +87,15 @@ public class CourseAddMenu extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			String entry = courseID.getText();
 			String entry2 = courseName.getText();
-			String dto = entry + "---" + entry2; // 12345---Matematik
-			//Broker
-			CourseBroker cb = new CourseBroker();
-			//Skapar ny klassdto med input (strängen  dto)
-			d = new ClassDTO(dto);
+			
+			c = new Course(entry, entry2);
+			
 			if(e.getSource() == addBtn){
 				if(entry != null){
-					try {
-						//Skickar d (dto) till cb(brokern)
-						cb.insertStorage(d);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
+					df.addCourse();
 				}	
 			} else if (e.getSource() == viewBtn) {
-				try {
-					cb.getFromStorage(d);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				df.getCourse();
 			}
 		}
 	}
