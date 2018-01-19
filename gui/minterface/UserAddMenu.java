@@ -110,63 +110,54 @@ public class UserAddMenu extends JPanel {
 
 	private class Handlerclass implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-				String table = (String) userType.getSelectedItem();
-				String entry = userID.getText() + "---";
-				String entry2 = userName.getText() + "---";
-				String entry3 = userEmail.getText();
-				switch (table) {
-				case "Teacher":
-					t = new Teacher(entry, entry2, entry3);
-					System.out.println(t.toString());
-					if (e.getSource() == addBtn) {
-						if (entry != null) {
-							df.addTeacher(t);
-						}
+			String table = (String) userType.getSelectedItem();
+			String entry = userID.getText() + "---";
+			String entry2 = userName.getText() + "---";
+			String entry3 = userEmail.getText();
+			switch (table) {
+			case "Teacher":
+				t = new Teacher(entry, entry2, entry3);
+				System.out.println(t.toString());
+				if (e.getSource() == addBtn) {
+					if (entry != null) {
+						df.addTeacher(t);
 					}
-					else if (e.getSource() == viewBtn) {
-						ArrayList<Teacher> temp = df.getTeacher();
-						//loop list
-						for(int i = 0;i < temp.size(); i++){
-							System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
-						}
-					}
-					break;
-				case "Student":
-					s = new Student(entry, entry2, entry3);
-					if (e.getSource() == addBtn) {
-						if (entry != null) {
-								df.addStudent(s);
-						}
-					}
-					else if (e.getSource() == viewBtn) {
-						df.getStudent();
-					}
-					break;
-				case "Parent":
-					p = new Parent(entry, entry2, entry3);
-					if (e.getSource() == addBtn) {
-						if (entry != null) {
-							df.addParent(p);
-						}
-					}
-					else if (e.getSource() == viewBtn) {
-						ArrayList<Parent> temp = df.getParent();
-						//loop list
-						for(int i = 0;i < temp.size(); i++){
-							System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
-						}
-					}
-					break;
 				}
-			
-			/*if(e.getSource()==viewBtn){
-				//get from database
-				ArrayList<Teacher> temp = df.getTeacher();
-				//loop list
-				for(int i = 0;i < temp.size(); i++){
-					System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
+				else if (e.getSource() == viewBtn) {
+					ArrayList<Teacher> temp = df.getTeacher();
+					//loop list
+					for(int i = 0;i < temp.size(); i++){
+						System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
+					}
 				}
-			}*/
+				break;
+			case "Student":
+				s = new Student(entry, entry2, entry3);
+				if (e.getSource() == addBtn) {
+					if (entry != null) {
+							df.addStudent(s);
+					}
+				}
+				else if (e.getSource() == viewBtn) {
+					df.getStudents();
+				}
+				break;
+			case "Parent":
+				p = new Parent(entry, entry2, entry3);
+				if (e.getSource() == addBtn) {
+					if (entry != null) {
+						df.addParent(p);
+					}
+				}
+				else if (e.getSource() == viewBtn) {
+					ArrayList<Parent> temp = df.getParent();
+					//loop list
+					for(int i = 0;i < temp.size(); i++){
+						System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
+					}
+				}
+				break;
+			}
 		}
 	}
 }

@@ -1,13 +1,10 @@
 package data.dataFacade;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import data.persistanceFacade.factory.*;
 import data.persistanceFacade.state.*;
 import data.dataTransferObject.*;
-import data.persistanceFacade.broker.*;
-import domain.entities.Absence;
 import domain.entities.Course;
 import domain.entities.Parent;
 import domain.entities.Semester;
@@ -15,39 +12,27 @@ import domain.entities.Student;
 import domain.entities.Teacher;
 
 public class DataFacade implements Entities{
-	private StudentBroker sb;
 	private StudentDTO sDTO;
-	private TeacherBroker tb;
 	private TeacherDTO tDTO;
-	private ParentBroker pb;
 	private ParentDTO pDTO;
-	private SemesterBroker semb;
 	private SemesterDTO semDTO;
-	private CourseBroker cb;
 	private CourseDTO cDTO;
 	private Object obj;
 	private EntityFactory ef;
 	private NewDataState nds;
+	private PersistenceFacade pFacade;
 	
 	public DataFacade()
 	{
-		sb = new StudentBroker();
-		tb = new TeacherBroker();
-		pb = new ParentBroker();
-		semb = new SemesterBroker();
-		cb = new CourseBroker();
 		ef = new EntityFactory();
 		nds = new NewDataState();
+		pFacade = new PersistenceFacade();
 	}
 	
 	//Student
-	public ArrayList<Student> getStudent()
+	public ArrayList<Student> getStudents()
 	{
-		try {
-			 obj = sb.getFromStorage(new Object());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		obj = pFacade.getStudents();
 		ArrayList<Student> students = new ArrayList<Student>();
 		String s1 = obj.toString();
 		String[] test = s1.split("\\n");
@@ -76,41 +61,25 @@ public class DataFacade implements Entities{
 		nds.insert(dto);
 		dto.setState(nds);
 		System.out.println(dto.getState());
-		try {
-			sb.insertStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.addStudent(dto);
 	}
 	
 	public void updateStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
-		try {
-			sb.updateStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.updateStudent(dto);
 	}
 	
 	public void deleteStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
-		try {
-			sb.deleteStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.deleteStudent(dto);
 	}
 	
 	public Object findStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
-		try {
-			obj = sb.findInStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.findStudent(dto);
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		sDTO = new StudentDTO(splitter1[0], splitter1[1],splitter1[2]);
@@ -122,11 +91,7 @@ public class DataFacade implements Entities{
 	//Teacher
 	public ArrayList<Teacher> getTeacher()
 	{
-		try {
-			 obj = tb.getFromStorage(new Object());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		obj = pFacade.getTeacher();
 		ArrayList<Teacher> teachers = new ArrayList<Teacher>();
 		String s1 = obj.toString();
 		String[] test = s1.split("\\n");
@@ -156,38 +121,25 @@ public class DataFacade implements Entities{
 		nds.insert(dto);
 		dto.setState(nds);
 		System.out.println(dto.getState());
-		try {
-			tb.insertStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.addTeacher(dto);
 	}
 	
 	public void updateTeacher(Teacher teacher)
 	{
-		try {
-			tb.updateStorage(teacher);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		TeacherDTO dto = new TeacherDTO(teacher.getPersonnummer(), teacher.getName(), teacher.getEmail());
+		pFacade.updateTeacher(dto);
 	}
 	
 	public void deleteTeacher(Teacher teacher)
 	{
-		try {
-			tb.deleteStorage(teacher);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		TeacherDTO dto = new TeacherDTO(teacher.getPersonnummer(), teacher.getName(), teacher.getEmail());
+		pFacade.deleteTeacher(dto);
 	}
 	
 	public Object findTeacher(Teacher teacher)
 	{
-		try {
-			obj = tb.findInStorage(teacher);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		TeacherDTO dto = new TeacherDTO(teacher.getPersonnummer(), teacher.getName(), teacher.getEmail());
+		obj = pFacade.findTeacher(dto);
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		tDTO = new TeacherDTO(splitter1[0], splitter1[1],splitter1[2]);
@@ -199,11 +151,7 @@ public class DataFacade implements Entities{
 	//Parent
 	public ArrayList<Parent> getParent()
 	{
-			try {
-				 obj = pb.getFromStorage(new Object());
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			obj = pFacade.getParent();
 			ArrayList<Parent> parents = new ArrayList<Parent>();
 			String s1 = obj.toString();
 			String[] test = s1.split("\\n");
@@ -232,41 +180,25 @@ public class DataFacade implements Entities{
 		nds.insert(dto);
 		dto.setState(nds);
 		System.out.println(dto.getState());
-		try {
-			pb.insertStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.addParent(dto);
 	}
 	
 	public void updateParent(Parent parent)
 	{
 		ParentDTO dto = new ParentDTO(parent.getPersonnummer(), parent.getName(), parent.getEmail());
-		try {
-			pb.updateStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.updateParent(dto);
 	}
 	
 	public void deleteParent(Parent parent)
 	{
 		ParentDTO dto = new ParentDTO(parent.getPersonnummer(), parent.getName(), parent.getEmail());
-		try {
-			pb.deleteStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.deleteParent(dto);
 	}
 	
 	public Object findParent(Parent parent)
 	{
 		ParentDTO dto = new ParentDTO(parent.getPersonnummer(), parent.getName(), parent.getEmail());
-		try {
-			obj = pb.findInStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		obj = pFacade.findParent(dto);
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		Parent newParent = (Parent) ef.getEntity(PARENT, tDTO.name, tDTO.personnummer, tDTO.email);
@@ -276,11 +208,7 @@ public class DataFacade implements Entities{
 	//Semester
 	public ArrayList<Semester> getSemester()
 	{
-		try {
-			 obj = semb.getFromStorage(new Object());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		obj = pFacade.getSemester();
 		ArrayList<Semester> semesters = new ArrayList<Semester>();
 		String s1 = obj.toString();
 		String[] test = s1.split("\\n");
@@ -306,41 +234,25 @@ public class DataFacade implements Entities{
 	public void addSemester(Semester semester)
 	{
 		SemesterDTO dto = new SemesterDTO(semester.getSemesterID());
-		try {
-			semb.insertStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.addSemester(dto);
 	}
 	
 	public void updateSemester(Semester semester)
 	{
 		SemesterDTO dto = new SemesterDTO(semester.getSemesterID());
-		try {
-			semb.updateStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.updateSemester(dto);
 	}
 	
 	public void deleteSemester(Semester semester)
 	{
 		SemesterDTO dto = new SemesterDTO(semester.getSemesterID());
-		try {
-			semb.deleteStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.deleteSemester(dto);
 	}
 	
 	public Object findSemester(Semester semester)
 	{
 		SemesterDTO dto = new SemesterDTO(semester.getSemesterID());
-		try {
-			obj = semb.findInStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.findSemester(dto);
 		semDTO = new SemesterDTO(obj.toString());
 		Semester sem = new Semester(semDTO.toString());
 		return sem;
@@ -349,11 +261,7 @@ public class DataFacade implements Entities{
 	//Course
 	public ArrayList<Course> getCourse()
 	{
-		try {
-			 obj = cb.getFromStorage(new Object());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		obj = pFacade.getCourse();
 		ArrayList<Course> courses = new ArrayList<Course>();
 		String s1 = obj.toString();
 		String[] test = s1.split("\\n");
@@ -379,41 +287,25 @@ public class DataFacade implements Entities{
 	public void addCourse(Course course)
 	{
 		CourseDTO dto = new CourseDTO(course.getCourseID(), course.getCourseName());
-		try {
-			cb.insertStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.addCourse(dto);
 	}
 	
 	public void updateCourse(Course course)
 	{
 		CourseDTO dto = new CourseDTO(course.getCourseID(), course.getCourseName());
-		try {
-			cb.updateStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.updateCourse(dto);
 	}
 	
 	public void deleteCourse(Course course)
 	{
 		CourseDTO dto = new CourseDTO(course.getCourseID(), course.getCourseName());
-		try {
-			cb.deleteStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pFacade.deleteCourse(dto);
 	}
 	
 	public Object findCourse(Course course)
 	{
 		CourseDTO dto = new CourseDTO(course.getCourseID(), course.getCourseName());
-		try {
-			obj = cb.findInStorage(dto);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		obj = pFacade.findCourse(dto);
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		cDTO = new CourseDTO(splitter1[0], splitter1[1]);
