@@ -3,11 +3,13 @@ package data.dataFacade;
 import java.sql.SQLException;
 
 import data.persistanceFacade.broker.CourseBroker;
+import data.persistanceFacade.broker.LoginBroker;
 import data.persistanceFacade.broker.ParentBroker;
 import data.persistanceFacade.broker.SemesterBroker;
 import data.persistanceFacade.broker.StudentBroker;
 import data.persistanceFacade.broker.TeacherBroker;
 import data.dataTransferObject.*;
+
 
 public class PersistenceFacade {
 
@@ -16,6 +18,7 @@ public class PersistenceFacade {
 	private ParentBroker pb;
 	private SemesterBroker semb;
 	private CourseBroker cb;
+	private LoginBroker lb;
 	private Object obj;
 	
 	public PersistenceFacade()
@@ -25,6 +28,7 @@ public class PersistenceFacade {
 		pb = new ParentBroker();
 		semb = new SemesterBroker();
 		cb = new CourseBroker();
+		lb = new LoginBroker();
 	}
 	
 	public Object getStudents()
@@ -258,6 +262,16 @@ public class PersistenceFacade {
 			obj = cb.findInStorage(dto);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		return obj;
+	}
+	
+	public Object findLogin(LoginDTO dto)
+	{
+		try {
+			obj = lb.findInStorage(dto);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 		return obj;
 	}
