@@ -1,14 +1,18 @@
 package data.dataTransferObject;
 
 public class LoginDTO {
-	private String name;
+	private String id;
 
-	public LoginDTO(String name)
+	public LoginDTO(String id)
 	{
-		this.name = name;
+		this.id = id;
 	}
 	
 	public String toString(){
-		return name;
+		return id;
+	}
+	
+	public String getID(){
+		return id;
 	}
 }
