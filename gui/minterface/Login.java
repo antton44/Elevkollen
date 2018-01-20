@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,10 +14,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import data.dataTransferObject.DataTransferObject;
 import data.dataTransferObject.LoginDTO;
 import data.dataTransferObject.ParentDTO;
@@ -28,13 +31,15 @@ import data.persistanceFacade.broker.StudentBroker;
 import data.persistanceFacade.broker.TeacherBroker;
 import observer.LoginObserver;
 import domain.entities.Course;
+import domain.entities.Parent;
 import domain.entities.Student;
+import domain.entities.Teacher;
 import data.persistanceFacade.broker.CourseBroker;
 import gui.view.StudentController;
+import data.dataFacade.DataFacade;
 
 public class Login extends JFrame {
 	static final long serialVersionUID = -6695746967101954108L;
-	LoginBroker lb; // Broker för login
 	JButton btnlogin; // Knapp för att logga in
 	JPanel panellogin; // JPanel för logga in
 	JTextField jtfUser; // Textfält som tar emot användarnamn (personnummer)
@@ -107,6 +112,8 @@ public class Login extends JFrame {
 
 // STATES FOR LOGIN
 class State {
+	protected DataFacade dFacade;
+	protected Object obj;
 	public void build(Login ls) {
 	}
 	public void Handle(Login ls, ActionEvent e) {
@@ -122,6 +129,7 @@ class State {
 }
 
 class loggedoffState extends State {
+	private String loginString;
 	public String toString()
 	{
 		return "Logged Off State";
@@ -133,6 +141,7 @@ class loggedoffState extends State {
 		return instance;
 	}
 	public void build(Login ls) {
+		dFacade = new DataFacade();
 		ls.panellogin = new JPanel();
 		ls.panellogin.setBorder(new LineBorder(Color.BLACK));
 
@@ -164,32 +173,21 @@ class loggedoffState extends State {
 		ls.addpanel(ls.panellogin, BorderLayout.CENTER);
 	}
 	public void Handle(Login ls, ActionEvent e) {
-		System.out.println("handle 1");
 		if (e.getSource() == ls.btnlogin) {
-			System.out.println("handle 2");
-			ls.lb = new LoginBroker();
 
 			String dtos = ls.jtfUser.getText() + "---"
 					+ ls.jtfPassword.getText();
 
-			LoginDTO d = new LoginDTO(dtos);
+			obj = dFacade.FindLogin(dtos);
+			loginString = obj.toString();
 
-			Object loginobject = null;
+			obj = null;
+			Student tempS = new Student("", loginString, "");
 			try {
-				loginobject = ls.lb.findInStorage(d);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			String loginstring = loginobject.toString();
-
-			Object rs = null;
-			StudentDTO sdto = new StudentDTO("", loginstring, "");
-			StudentBroker sb = new StudentBroker();
-			try {
-				rs = sb.findInStorage(sdto);
-				if (rs != null) {
-					System.out.println("A");
-					// ls.loginasstudent(loginstring);
+				obj = dFacade.findStudent(tempS);
+				System.out.println(obj.toString());
+				if (obj != null) {
+					System.out.println("check");
 					ls.setState(studentloggedinState.instance());
 					ls.build();
 				}
@@ -197,17 +195,12 @@ class loggedoffState extends State {
 
 			}
 
-			TeacherDTO tdto = new TeacherDTO("", loginstring, "");
-			TeacherBroker tb = new TeacherBroker();
+			Teacher tempT = new Teacher("", loginString, "");
 
-			rs = null;
-			System.out.println(loginstring);
+			obj = null;
 			try {
-				rs = tb.findInStorage(tdto);
-				if (rs != null) {
-					System.out.println("B");
-					// ls.loginasteacher(loginstring);
-					//ls.clear();
+				obj = dFacade.findTeacher(tempT);
+				if (obj != null) {
 					ls.setState(teacherloggedinState.instance());
 					ls.build();
 				}
@@ -215,14 +208,12 @@ class loggedoffState extends State {
 
 			}
 
-			rs = null;
-			ParentDTO pdto = new ParentDTO("", loginstring, "");
-			ParentBroker pb = new ParentBroker();
+			obj = null;
+			Parent tempP = new Parent("", loginString, "");
 			try {
-				rs = pb.findInStorage(pdto);
-				if (rs != null) {
-					System.out.println("C");
-					// ls.loginasparent(loginstring);
+				obj = dFacade.findParent(tempP);
+				if (obj != null) {
+					System.out.println("check");
 					ls.setState(parentloggedinState.instance());
 					ls.build();
 				}
@@ -245,61 +236,32 @@ class teacherloggedinState extends State {
 		return instance;
 	}
 	public void build(Login ls) {
+		dFacade = new DataFacade();
 		ls.setSize(1280,  720);
 		ls.remove(ls.panellogin);
 		ls.revalidate();
 		ls.repaint();
 		ls.sc = new StudentController();
 		ls.courses = new ArrayList<Course>();
-
-		CourseBroker cb = new CourseBroker();
-		Object d = null;
-		try {
-			d = cb.getFromStorage(new Object());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		
+		ArrayList<Course> coursesFromStorage = new ArrayList<Course>();
+		coursesFromStorage = dFacade.getCourse();
+		for(int i = 0; i < coursesFromStorage.size(); i++)
+		{
+			ls.courses.add(new Course(coursesFromStorage.get(i).getCourseID(), coursesFromStorage.get(i).getCourseName()));
 		}
-
-		String s = d.toString();
-
-		String[] test2 = s.split("\\n");
-		int length2 = test2.length;
-		int i = 0;
-		int j = 1;
-		for (int q = 0; q < length2; q++) {
-			String[] splitter = s.split("---|\\n");
-			ls.courses.add(new Course(splitter[i], splitter[j]));
-			i = i + 2;
-			j = j + 2;
-		}
-
-		StudentBroker sb = new StudentBroker();
-		Object student = null;
-		try {
-			student = sb.getFromStorage(new Object());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		String s1 = student.toString();
-		String[] test = s1.split("\\n");
-		int length = test.length;
-
-		for (int v = 0; v < ls.courses.size(); v++) {
-			int r = 0;
-			int t = 1;
-			int y = 2;
-			for (int k = 0; k < length; k++) {
-				String[] splitter1 = s1.split("---|\\n");
+			
+		ArrayList<Student> students = dFacade.getStudents();
+		for (int v = 0; v < ls.courses.size(); v++) 
+		{
+			for(int i = 0; i < students.size(); i++)
+			{
 				ls.courses.get(v)
-						.addStudent(
-								new StudentDTO(splitter1[r], splitter1[t],
-										splitter1[y]));
-				ls.courses.get(v).getStudent(k)
-						.registerAbsence(ls.courses.get(0), 0, "tus");
-				r = r + 3;
-				t = t + 3;
-				y = y + 3;
+					.addStudent(
+						new StudentDTO(students.get(i).getName(), students.get(i).getPersonnummer(),
+								students.get(i).getEmail()));
+				ls.courses.get(v).getStudent(i)
+					.registerAbsence(ls.courses.get(0), 0, "tus");
 			}
 		}
 
