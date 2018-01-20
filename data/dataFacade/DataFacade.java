@@ -79,7 +79,7 @@ public class DataFacade implements Entities{
 	public Object findStudent(Student student)
 	{
 		StudentDTO dto = new StudentDTO(student.getPersonnummer(), student.getName(), student.getEmail());
-		pFacade.findStudent(dto);
+		obj = pFacade.findStudent(dto);
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
 		sDTO = new StudentDTO(splitter1[0], splitter1[1],splitter1[2]);
@@ -201,7 +201,8 @@ public class DataFacade implements Entities{
 		obj = pFacade.findParent(dto);
 		String s1 = obj.toString();
 		String[] splitter1 = s1.split("---|\\n");
-		Parent newParent = (Parent) ef.getEntity(PARENT, tDTO.name, tDTO.personnummer, tDTO.email);
+		pDTO = new ParentDTO(splitter1[0], splitter1[1],splitter1[2]);
+		Parent newParent = (Parent) ef.getEntity(PARENT, pDTO.name, pDTO.personnummer, pDTO.email);
 		return newParent;
 	}
 	
@@ -271,14 +272,12 @@ public class DataFacade implements Entities{
 		for (int i = 0; i < rounds; i++) {
 			int r = 0;
 			int t = 1;
-			int y = 2;
 			for (int k = 0; k < length; k++) {
 				String[] splitter1 = s1.split("---|\\n");
-				tDTO = new TeacherDTO(splitter1[r], splitter1[t],splitter1[y]);
+				cDTO = new CourseDTO(splitter1[r], splitter1[t]);
 				courses.add(new Course(cDTO.classID, cDTO.name));
-				r = r + 3;
-				t = t + 3;
-				y = y + 3;
+				r = r + 2;
+				t = t + 2;
 			}
 		}
 		return courses;
@@ -311,6 +310,13 @@ public class DataFacade implements Entities{
 		cDTO = new CourseDTO(splitter1[0], splitter1[1]);
 		Course newCourse = new Course(cDTO.classID, cDTO.name);
 		return newCourse;
+	}
+	
+	public Object FindLogin(String login)
+	{
+		LoginDTO dto = new LoginDTO(login);
+		obj = pFacade.findLogin(dto);
+		return obj;
 	}
 }
 
