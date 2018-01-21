@@ -1,28 +1,29 @@
 package data.dataTransferObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import data.dataFacade.IDataState;
 import observer.Observer;
 
-public abstract class DataTransferObject{
+public abstract class DataTransferObject implements Serializable{
 	public IDataState state;
 	private List<Observer> observers = new ArrayList<Observer>();
-	
-	public DataTransferObject(){
-		state = null;
-	}
-	
-	public void setState(IDataState state)
+
+	private int id;
+	public int getId()
 	{
-		this.state = state;
+		return id;
+	}
+    public void setId(int id)
+    {
+    	this.id = id;
+    }
+	
+	public void setState()
+	{
 		notifyAllObservers();
-	}
-	
-	public IDataState getState()
-	{
-		return state;
 	}
 	
 	public void attach(Observer observer)
