@@ -4,19 +4,16 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
-public abstract class Broker {
+import data.dataTransferObject.DataTransferObject;
 
-	private HashMap<UUID, Object> cache = new HashMap<UUID, Object>();
+public abstract class Broker {
 
 	// Cache
 
-	public Object find(UUID id) throws SQLException { // Template Method
-		if (cache.containsKey(id))
-			return cache.get(id);
+	public Object find(Object obj) throws SQLException { // Template Method
+        Object obj2 = getFromStorage(obj);
 
-		Object obj = this.findInStorage(id);
-		cache.put(id, obj);
-		return obj;
+        return obj2;
 	}
 
 	//DTO
@@ -24,17 +21,14 @@ public abstract class Broker {
 	
 	public void insert(Object object)
 	{
-		cache.put(UUID.fromString(object.toString()), object);
 	}
 	
 	public void update(Object object)
 	{
-		cache.put(UUID.fromString(object.toString()), object);
 	}
 	
 	public void delete(Object object)
 	{
-		cache.remove(UUID.fromString(object.toString()));
 	}
 	
 	
