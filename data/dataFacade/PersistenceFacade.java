@@ -1,15 +1,20 @@
 package data.dataFacade;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import data.dataTransferObject.CourseDTO;
+import data.dataTransferObject.LoginDTO;
+import data.dataTransferObject.ParentDTO;
+import data.dataTransferObject.SemesterDTO;
+import data.dataTransferObject.StudentDTO;
+import data.dataTransferObject.TeacherDTO;
 import data.persistanceFacade.broker.CourseBroker;
 import data.persistanceFacade.broker.LoginBroker;
 import data.persistanceFacade.broker.ParentBroker;
 import data.persistanceFacade.broker.SemesterBroker;
 import data.persistanceFacade.broker.StudentBroker;
 import data.persistanceFacade.broker.TeacherBroker;
-import data.dataTransferObject.*;
-
 
 public class PersistenceFacade {
 
@@ -20,6 +25,12 @@ public class PersistenceFacade {
 	private CourseBroker cb;
 	private LoginBroker lb;
 	private Object obj;
+	private CourseDTO cDTO;
+	private TeacherDTO tDTO;
+	private StudentDTO sDTO;
+	private ParentDTO pDTO;
+	private LoginDTO lDTO;
+	private SemesterDTO semDTO;
 	
 	public PersistenceFacade()
 	{
@@ -31,14 +42,41 @@ public class PersistenceFacade {
 		lb = new LoginBroker();
 	}
 	
-	public Object getStudents()
+	//
+	public ArrayList<StudentDTO> getStudents()
 	{
 		try {
 			 obj = sb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		ArrayList<StudentDTO> students = new ArrayList<>();
+		String s1 = obj.toString();
+		System.out.println("s1 " + s1);
+		String[] test = s1.split("\\n");
+		int rounds = test.length;
+		int length = rounds / 4;
+		
+		System.out.println("rounds: " + rounds + " length: " + length);
+		
+		int r = 0;
+		int t = 1;
+		int y = 2;
+		int u = 3;
+		String[] splitter1 = s1.split("---|\\n");
+		for (int i = 0; i < rounds; i++) {
+				sDTO = new StudentDTO(splitter1[r], splitter1[t], splitter1[y], splitter1[u]);
+				System.out.println(r + " sDTO: " + sDTO.toString());
+				students.add(new StudentDTO(sDTO.name, sDTO.personnummer, sDTO.email, sDTO.id));
+				r = r + 4; 
+				t = t + 4; 
+				y = y + 4;
+				u = u + 4;
+		}
+		System.out.println(students.size());
+		
+		System.out.println("rs.next");
+		return students;
 	}
 	
 	public void addStudent(StudentDTO dto)
@@ -68,24 +106,46 @@ public class PersistenceFacade {
 		}
 	}
 	
-	public Object findStudent(StudentDTO dto)
+	public StudentDTO findStudent(StudentDTO dto)
 	{
 		try {
 			obj = sb.findInStorage(dto);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		String s1 = obj.toString();
+		String[] splitter1 = s1.split("---|\\n");
+		sDTO = new StudentDTO(splitter1[0], splitter1[1],splitter1[2], splitter1[3]);
+		return sDTO;
 	}
 	
-	public Object getTeacher()
+	public ArrayList<TeacherDTO> getTeacher()
 	{
 		try {
 			 obj = tb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		ArrayList<TeacherDTO> teachers = new ArrayList<>();
+		String s1 = obj.toString();
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			int y = 2;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				tDTO = new TeacherDTO(splitter1[r], splitter1[t],splitter1[y]);
+				teachers.add(new TeacherDTO(tDTO.name, tDTO.personnummer, tDTO.email));
+				r = r + 3;
+				t = t + 3;
+				y = y + 3;
+			}
+		}
+		return teachers;
 	}
 	
 	public void addTeacher(TeacherDTO dto)
@@ -115,24 +175,46 @@ public class PersistenceFacade {
 		}
 	}
 	
-	public Object findTeacher(TeacherDTO dto)
+	public TeacherDTO findTeacher(TeacherDTO dto)
 	{
 		try {
 			obj = tb.findInStorage(dto);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		String s1 = obj.toString();
+		String[] splitter1 = s1.split("---|\\n");
+		tDTO = new TeacherDTO(splitter1[0], splitter1[1],splitter1[2]);
+		return tDTO;
 	}
 	
-	public Object getParent()
+	public ArrayList<ParentDTO> getParent()
 	{
 		try {
 			 obj = pb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		ArrayList<ParentDTO> parents = new ArrayList<>();
+		String s1 = obj.toString();
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			int y = 2;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				pDTO = new ParentDTO(splitter1[r], splitter1[t],splitter1[y]);
+				parents.add(new ParentDTO(pDTO.name, pDTO.personnummer, pDTO.email));
+				r = r + 3;
+				t = t + 3;
+				y = y + 3;
+			}
+		}
+		return parents;
 	}
 	
 	public void addParent(ParentDTO dto)
@@ -162,24 +244,60 @@ public class PersistenceFacade {
 		}
 	}
 	
-	public Object findParent(ParentDTO dto)
+	public ParentDTO findParent(ParentDTO dto)
 	{
 		try {
 			obj = pb.findInStorage(dto);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		String s1 = obj.toString();
+		String[] splitter1 = s1.split("---|\\n");
+		pDTO = new ParentDTO(splitter1[0], splitter1[1],splitter1[2]);
+		return pDTO;
 	}
 	
-	public Object getSemester()
+	public CourseDTO findCourse(CourseDTO dto)
+	{
+		try{
+			obj = pb.findInStorage(dto);
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		String s1 = obj.toString();
+		String[] splitter = s1.split("---|\\n");
+		cDTO = new CourseDTO(splitter[0], splitter[1]);
+		return cDTO;
+	}
+	
+	public ArrayList<SemesterDTO> getSemester()
 	{
 		try {
 			 obj = semb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		ArrayList<SemesterDTO> semesters = new ArrayList<>();
+		String s1 = obj.toString();
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			int y = 2;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				tDTO = new TeacherDTO(splitter1[r], splitter1[t],splitter1[y]);
+				semesters.add(new SemesterDTO(semDTO.toString()));
+				r = r + 3;
+				t = t + 3;
+				y = y + 3;
+			}
+		}
+		return semesters;
 	}
 	
 	public void addSemester(SemesterDTO dto)
@@ -209,24 +327,43 @@ public class PersistenceFacade {
 		}
 	}
 	
-	public Object findSemester(SemesterDTO dto)
+	public SemesterDTO findSemester(SemesterDTO dto)
 	{
 		try {
 			obj = semb.findInStorage(dto);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		return obj;
+		}		
+		String s1 = obj.toString();
+		semDTO = new SemesterDTO(s1);
+		return semDTO;
 	}
 	
-	public Object getCourse()
+	public ArrayList<CourseDTO> getCourse()
 	{
 		try {
 			 obj = cb.getFromStorage(new Object());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		ArrayList<CourseDTO> courses = new ArrayList<CourseDTO>();
+		String s1 = obj.toString();
+		String[] test = s1.split("\\n");
+		int length = test.length;
+		int rounds = length / 3;
+		
+		for (int i = 0; i < rounds; i++) {
+			int r = 0;
+			int t = 1;
+			for (int k = 0; k < length; k++) {
+				String[] splitter1 = s1.split("---|\\n");
+				cDTO = new CourseDTO(splitter1[r], splitter1[t]);
+				courses.add(new CourseDTO(cDTO.classID, cDTO.name));
+				r = r + 2;
+				t = t + 2;
+			}
+		}
+		return courses;
 	}
 	
 	public void addCourse(CourseDTO dto)
@@ -256,24 +393,31 @@ public class PersistenceFacade {
 		}
 	}
 	
-	public Object findCourse(CourseDTO dto)
+	public CourseDTO find(CourseDTO dto)
 	{
 		try {
 			obj = cb.findInStorage(dto);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return obj;
+		String s1 = obj.toString();
+		String[] splitter1 = s1.split("---|\\n");
+		cDTO = new CourseDTO(splitter1[0], splitter1[1]);
+		return cDTO;
 	}
 	
-	public Object findLogin(LoginDTO dto)
+	public LoginDTO find(LoginDTO dto)
 	{
+		lDTO = null;
+		String s1 = "";
 		try {
 			obj = lb.findInStorage(dto);
+			s1 = obj.toString();
+			lDTO = new LoginDTO(s1);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		return obj;
+		return lDTO;
 	}
 }
 
