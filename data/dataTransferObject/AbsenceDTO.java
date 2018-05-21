@@ -1,19 +1,20 @@
 package data.dataTransferObject;
 
-import java.util.UUID;
-
-import domain.entities.Course;
-import domain.entities.Student;
-
+@SuppressWarnings("serial")
 public class AbsenceDTO extends DataTransferObject{
-	public Student absentStudent;
-	public Course course;
+	public StudentDTO absentStudent;
+	public CourseDTO course;
 	public Boolean unauthorizedAbsence;
 	
-	public AbsenceDTO(Student absentStudent, Course course, Boolean unauthorizedAbsence)
+	public AbsenceDTO(StudentDTO absentStudent, CourseDTO course, Boolean unauthorizedAbsence)
 	{
 		this.absentStudent = absentStudent;
 		this.course = course;
 		this.unauthorizedAbsence = unauthorizedAbsence;
+	}
+
+	@Override
+	public String toString() {
+		return absentStudent.toString() + course.toString() + unauthorizedAbsence;
 	}
 }

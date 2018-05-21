@@ -10,14 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import domain.entities.Semester;
 
 @SuppressWarnings("serial")
 public class SemesterAddMenu extends JPanel{
 	private JButton addBtn;	//Knappen f�r att l�gga till en termin
 	private JTextField semesterID;	//Textf�lt som tar emot terminens namn
 	private JLabel semesterIDLabel;	//Label f�r textf�ltet
-	private Semester s;
 	
 	public SemesterAddMenu(){
 		JPanel panel = new JPanel();
@@ -41,10 +39,6 @@ public class SemesterAddMenu extends JPanel{
 		panel.add(addBtn);
 	}
 	
-	public void semester(String entry){
-		s = new Semester(entry);
-	}
-	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
@@ -52,9 +46,7 @@ public class SemesterAddMenu extends JPanel{
 	
 	private class Handlerclass implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			String entry = semesterID.getText();
 			if (e.getSource() == addBtn) {
-				semester(entry);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package data.dataTransferObject;
 
+@SuppressWarnings("serial")
 public class TeacherDTO extends DataTransferObject{
 	public String name;
 	public String personnummer;

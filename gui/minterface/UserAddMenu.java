@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import data.dataFacade.DataFacade;
+import domain.domainFacade.*;
 import domain.entities.Teacher;
 import domain.entities.Parent;
 import domain.entities.Student;
@@ -38,7 +38,7 @@ public class UserAddMenu extends JPanel {
 	private Parent p;
 	private Student s;
 	private Teacher t;
-	private DataFacade df = new DataFacade();
+	private DomainFacade df = new DomainFacade();
 
 
 	public UserAddMenu() {
@@ -117,14 +117,14 @@ public class UserAddMenu extends JPanel {
 			switch (table) {
 			case "Teacher":
 				t = new Teacher(entry, entry2, entry3);
-				System.out.println(t.toString());
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
-						df.addTeacher(t);
+						df.add(t);
 					}
 				}
 				else if (e.getSource() == viewBtn) {
-					ArrayList<Teacher> temp = df.getTeacher();
+					ArrayList<Teacher> temp = df.getTeachers();
+					System.out.println("VIEWBUTTON WAS PRESSED:");
 					//loop list
 					for(int i = 0;i < temp.size(); i++){
 						System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
@@ -132,25 +132,30 @@ public class UserAddMenu extends JPanel {
 				}
 				break;
 			case "Student":
-				s = new Student(entry, entry2, entry3);
+				s = new Student(entry, entry2, entry3 + "---");
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
-							df.addStudent(s);
+							df.add(s);
 					}
 				}
 				else if (e.getSource() == viewBtn) {
-					df.getStudents();
+					ArrayList<Student> temp = df.getStudents();
+					System.out.println("VIEWBUTTON WAS PRESSED:");
+					for(int i = 0;i < temp.size(); i++){
+						System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj
+					}
 				}
 				break;
 			case "Parent":
 				p = new Parent(entry, entry2, entry3);
 				if (e.getSource() == addBtn) {
 					if (entry != null) {
-						df.addParent(p);
+						df.add(p);
 					}
 				}
 				else if (e.getSource() == viewBtn) {
-					ArrayList<Parent> temp = df.getParent();
+					ArrayList<Parent> temp = df.getParents();
+					System.out.println("VIEWBUTTON WAS PRESSED:");
 					//loop list
 					for(int i = 0;i < temp.size(); i++){
 						System.out.println(temp.get(i).getName());//ska den skriva ut? .getName returnerar personnummer, ajaj

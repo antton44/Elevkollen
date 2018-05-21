@@ -6,16 +6,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import data.dataTransferObject.ClassDTO;
-import data.persistanceFacade.broker.CourseBroker;
 import domain.entities.Course;
+import domain.domainFacade.DomainFacade;
 
 
 @SuppressWarnings("serial")
@@ -28,7 +26,7 @@ public class CourseAddMenu extends JPanel {
 	private JTextField courseName;	//Textfält för kursnamn
 	private GridBagConstraints gbc = new GridBagConstraints();	//Gridbaglayout för knapparna
 	private Course c;
-	private DataFacade df = new DataFacade();
+	private DomainFacade df;
 	private JPanel panel; //Klassens JPanel
 	Handlerclass handler;
 
@@ -92,7 +90,7 @@ public class CourseAddMenu extends JPanel {
 			
 			if(e.getSource() == addBtn){
 				if(entry != null){
-					df.addCourse(c);
+					df.add(c);
 				}	
 			} else if (e.getSource() == viewBtn) {
 				df.getCourse();

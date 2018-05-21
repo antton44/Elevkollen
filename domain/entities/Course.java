@@ -2,16 +2,10 @@ package domain.entities;
 
 import java.util.ArrayList;
 
-import data.dataTransferObject.StudentDTO;
-import data.persistanceFacade.factory.Entities;
-import data.persistanceFacade.factory.EntityFactory;
-
-
-public class Course implements Entities{
+public class Course{
 	private String courseID;
 	private String courseName;
 	private ArrayList<Student> students;
-	private EntityFactory ef;
 	
 	public Course()
 	{
@@ -25,12 +19,11 @@ public class Course implements Entities{
 		this.courseID = courseID;
 		this.courseName = courseName;
 		students = new ArrayList<Student>();
-		ef = new EntityFactory();
 	}
 
-	public void addStudent(StudentDTO dto)
+	public void addStudent(Student student)
 	{
-		students.add((Student)ef.getEntity(STUDENT, dto.name,  dto.personnummer,  dto.email));
+		students.add(student);
 	}
 	
 	public Student getStudent(int i)

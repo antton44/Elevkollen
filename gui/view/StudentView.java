@@ -12,14 +12,13 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
-import domain.entities.Course;
 import domain.entities.Student;
 
 public class StudentView extends JPanel implements TableModelListener{
 	private static final long serialVersionUID = 1L;
 	//private Course course;	//Den valda kursen
 	private String[] columnNames = {"Personnummer", "Namn", "Email", "ï¿½rskurs", "Anmï¿½ld frï¿½nvaro", "Frï¿½nvaro"};
-	private String[] absences = { "Ogiltig", "anmäld" };	//Alternativ fï¿½r frï¿½nvaro anmï¿½lning
+	private String[] absences = { "Ogiltig", "anmï¿½ld" };	//Alternativ fï¿½r frï¿½nvaro anmï¿½lning
 	private Object[][] data;	//Innehï¿½llet i tabellen
 	private JTable table = new JTable();	//Tabellen med alla studenter
 	private DefaultTableModel tableModel;	//Tabellmodellen
@@ -89,7 +88,6 @@ public class StudentView extends JPanel implements TableModelListener{
 		{
 			Object changedData = table.getValueAt(row, col);
 			String change = changedData.toString();
-			System.out.println(change);
 			students.get(row).changeAbscentWithString(change, 0);
 			table.setValueAt(students.get(row).getAbsenceToString(0), row, col-1);
 			tableModel.fireTableDataChanged();

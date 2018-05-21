@@ -1,7 +1,8 @@
 package data.dataTransferObject;
 
+@SuppressWarnings("serial")
 public class SemesterDTO extends DataTransferObject{
-	private String name;
+	public String name;
 
 	public SemesterDTO(String name)
 	{

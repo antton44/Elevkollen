@@ -61,7 +61,6 @@ public void insertStorage(Object object) throws SQLException {
 
 	@Override
 	public void deleteStorage(Object object) throws SQLException {
-		
 		String s = object.toString() + ":::";
 		String[] t = s.split(":::");
 		String temp = t[0];
@@ -142,7 +141,6 @@ public void insertStorage(Object object) throws SQLException {
 			     rs.close();
 			     stmt.close();
 			     conn.close();
-		         System.out.println();
 		         return id2 + "---" + name + "---" + email;
 		      }
 		      rs.close();

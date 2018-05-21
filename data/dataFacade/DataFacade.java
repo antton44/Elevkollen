@@ -5,12 +5,6 @@ import java.util.ArrayList;
 import data.dataTransferObject.*;
 
 public class DataFacade{
-	private StudentDTO sDTO;
-	private TeacherDTO tDTO;
-	private ParentDTO pDTO;
-	private SemesterDTO semDTO;
-	private CourseDTO cDTO;
-	private DataTransferObject obj;
 	private PersistenceFacade pFacade;
 	
 	public DataFacade()
@@ -23,7 +17,6 @@ public class DataFacade{
 	{
 		ArrayList<StudentDTO> sDtoList = new ArrayList<>();
 		sDtoList = pFacade.getStudents();
-		System.out.println("data: " + sDtoList.size());
 		return sDtoList;
 	}
 	

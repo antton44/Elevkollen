@@ -1,7 +1,6 @@
 package data.dataTransferObject;
 
-import java.util.UUID;
-
+@SuppressWarnings("serial")
 public class CourseDTO extends DataTransferObject{
 	public String name;
 	public String classID;

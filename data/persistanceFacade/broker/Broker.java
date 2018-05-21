@@ -1,10 +1,6 @@
 package data.persistanceFacade.broker;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.UUID;
-
-import data.dataTransferObject.DataTransferObject;
 
 public abstract class Broker {
 

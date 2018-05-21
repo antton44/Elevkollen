@@ -58,17 +58,15 @@ public class Window extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		
-			@SuppressWarnings("unchecked")
-			JComboBox<String> cb = (JComboBox<String>)e.getSource();
-	        String course = (String)cb.getSelectedItem();
-	        for(int i = 0; i < courses.size(); i++)
-	        {
-	        	if(courses.get(i).getCourseID().equals(course))
-	        	{
-	        		initTable(i);
-	        	}
-	        }
-		
+		@SuppressWarnings("unchecked")
+		JComboBox<String> cb = (JComboBox<String>)e.getSource();
+        String course = (String)cb.getSelectedItem();
+        for(int i = 0; i < courses.size(); i++)
+        {
+        	if(courses.get(i).getCourseID().equals(course))
+        	{
+        		initTable(i);
+        	}
+        }
 	}
 }

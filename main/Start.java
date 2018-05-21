@@ -3,12 +3,12 @@ package main;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
-import gui.minterface.Login;
+import gui.minterface.LoginWindow;
 
 public class Start {
 
 	public static void main(String[] args) {
-		Login login = new Login();
+		LoginWindow login = new LoginWindow();
 		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		login.setSize(360, 600);
 		login.setLayout(new BorderLayout());

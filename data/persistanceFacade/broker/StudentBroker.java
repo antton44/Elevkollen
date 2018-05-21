@@ -31,8 +31,8 @@ public class StudentBroker extends Broker {
 			conn.setAutoCommit(false);
 			//Insert till databas med hjälp SQL och tidigare uppdelad sträng.
 			stmt = conn.createStatement();
-			stmt.executeUpdate("INSERT INTO Students(personnummer, namn, email) VALUES ('"
-					+ input + "', '" + input2 + "', '" + splitter[2] + "');");
+			stmt.executeUpdate("INSERT INTO Students(personnummer, namn, email, UUID) VALUES ('"
+					+ input + "', '" + input2 + "', '" + splitter[2] + "', '" + splitter[3] + "');");
 			stmt.close();
 			conn.commit();
 			conn.close();
@@ -88,12 +88,12 @@ public class StudentBroker extends Broker {
 
 	@Override
 	public Object getFromStorage(Object object) throws SQLException {
-
+		
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:test.db");
 			conn.setAutoCommit(false);
-			String SQL = "SELECT * FROM Students;";
+			String SQL = "SELECT personnummer, namn, email, UUID FROM Students;";
 			stmt = conn.createStatement();
 			boolean results = stmt.execute(SQL);
 			@SuppressWarnings("unused")
@@ -104,15 +104,18 @@ public class StudentBroker extends Broker {
 				if (results) {
 					ResultSet rs = stmt.getResultSet();
 					rsCount++;
-
+					
+					rs.next();
+					
 					// Show data from the result set.
 
 					while (rs.next()) {
 						String id = rs.getString("personnummer");
 						String name = rs.getString("namn");
 						String email = rs.getString("email");
-
-						returns += id + "---" + name + "---" + email + "\n";
+						String uid = rs.getString("UUID");
+						
+						returns += id + "---" + name + "---" + email + "---" + uid.trim() + "\n";
 					}
 					rs.close();
 				}
@@ -121,6 +124,7 @@ public class StudentBroker extends Broker {
 			stmt.close();
 			conn.close();
 			return returns;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

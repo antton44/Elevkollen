@@ -2,10 +2,7 @@ package domain.entities;
 
 import java.util.ArrayList;
 
-import data.persistanceFacade.factory.Entities;
-
-
-public class Student extends Entity implements Entities{
+public class Student extends Entity{
 	private int year;
 	private ArrayList<Absence> absences;
 	
@@ -19,6 +16,13 @@ public class Student extends Entity implements Entities{
 	public Student(String name, String personnummer, String email)
 	{
 		super(name, personnummer, email);
+		this.year = 7;
+		absences = new ArrayList<Absence>();
+	}
+	
+	public Student(String name, String personnummer, String email, String id)
+	{
+		super(name, personnummer, email, id);
 		this.year = 7;
 		absences = new ArrayList<Absence>();
 	}
@@ -44,7 +48,7 @@ public class Student extends Entity implements Entities{
 		{
 			absences.get(i).setUnauthorizedAbsence(2);
 		}
-		else if(unauthorizedAbsence.equals("anmäld"))
+		else if(unauthorizedAbsence.equals("anmï¿½ld"))
 		{
 			absences.get(i).setUnauthorizedAbsence(1);
 		}
@@ -54,7 +58,7 @@ public class Student extends Entity implements Entities{
 	{
 		if(absences.isEmpty() || absences.get(i).getUnauthorizedAbsence() == 0)
 		{
-			return "Ingen registrerad frånvaro";
+			return "Ingen registrerad frï¿½nvaro";
 		}
 		else if(absences.get(i).getUnauthorizedAbsence() == 1) 
 		{

@@ -90,21 +90,15 @@ public void deleteStorage(Object object) throws SQLException {
 			String SQL = "SELECT * FROM Kurs;";
 			stmt = conn.createStatement();
 			boolean results = stmt.execute(SQL);
-		      int rsCount = 0;
 		      String returns = "";
 		      //Loop through the available result sets.
 		     do {
 		        if(results) {
 		           ResultSet rs = stmt.getResultSet();
-		           rsCount++;
-
-		           //Show data from the result set.
-		           System.out.println("RESULT SET #" + rsCount);
 		           
 		           while (rs.next()) {
 		        	  String id = rs.getString("KursID");
 				      String  name = rs.getString("Namn");
-		        	  System.out.println(rs.getString("KursID") + ", " + rs.getString("Namn"));
 		              returns += id + "---" + name + "\n";
 		           }
 		           rs.close();

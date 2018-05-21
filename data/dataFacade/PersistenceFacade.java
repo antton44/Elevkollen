@@ -52,12 +52,9 @@ public class PersistenceFacade {
 		}
 		ArrayList<StudentDTO> students = new ArrayList<>();
 		String s1 = obj.toString();
-		System.out.println("s1 " + s1);
+		System.out.println(s1);
 		String[] test = s1.split("\\n");
 		int rounds = test.length;
-		int length = rounds / 4;
-		
-		System.out.println("rounds: " + rounds + " length: " + length);
 		
 		int r = 0;
 		int t = 1;
@@ -66,16 +63,13 @@ public class PersistenceFacade {
 		String[] splitter1 = s1.split("---|\\n");
 		for (int i = 0; i < rounds; i++) {
 				sDTO = new StudentDTO(splitter1[r], splitter1[t], splitter1[y], splitter1[u]);
-				System.out.println(r + " sDTO: " + sDTO.toString());
 				students.add(new StudentDTO(sDTO.name, sDTO.personnummer, sDTO.email, sDTO.id));
 				r = r + 4; 
 				t = t + 4; 
 				y = y + 4;
 				u = u + 4;
 		}
-		System.out.println(students.size());
 		
-		System.out.println("rs.next");
 		return students;
 	}
 	
